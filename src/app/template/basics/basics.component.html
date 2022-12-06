@@ -1,1 +1,68 @@
-<p>basics works!</p>
+<h2>Template: Básicos</h2>
+<hr>
+
+<div class="row">
+  <div class="col">
+
+    <form autocomplete="off" (ngSubmit)="save()" #basicsForm="ngForm">
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Producto</label>
+        <div class="col-sm-9">
+          <input ngModel type="text" class="form-control" minlength="3"
+                 name="product" placeholder="Nombre del producto" required>
+          <span *ngIf="checkName()" class="form-text text-danger">
+            El nombre del producto debe de ser de mínimo 3 letras
+          </span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Precio</label>
+        <div class="col-sm-9">
+          <input ngModel type="number" class="form-control"
+                 name="price" placeholder="Precio del producto" [min]="0" customMin required>
+          <span *ngIf="checkPrice()" class="form-text text-danger">
+            El precio debe de ser mayor a 0
+          </span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Existencias</label>
+        <div class="col-sm-9">
+          <input ngModel type="number" class="form-control"
+                 name="stock" placeholder="Existencias del producto" [min]="-1" customMin required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button type="submit" class="btn btn-primary float-end"
+                  [disabled]="basicsForm.invalid">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+
+    <span><b>Valid</b></span>
+    <pre>{{ basicsForm.valid }}</pre>
+
+    <span><b>Pristine</b></span>
+    <pre>{{ basicsForm.pristine }}</pre>
+
+    <span><b>Touched</b></span>
+    <pre>{{ basicsForm.touched }}</pre>
+
+    <span><b>Values</b></span>
+    <pre>{{ basicsForm.value | json }}</pre>
+
+  </div>
+</div>
+
