@@ -1,1 +1,71 @@
-<p>basics works!</p>
+<h2>Reactive: Básicos</h2>
+<hr>
+
+<div class="row">
+  <div class="col">
+
+    <form autocomplete="off" [formGroup]="basicsForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Producto</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" placeholder="Nombre del producto"
+                 formControlName="name">
+          <span *ngIf="checkField('name')" class="form-text text-danger">
+            El nombre del producto debe de ser de mínimo 3 letras
+          </span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Precio</label>
+        <div class="col-sm-9">
+          <input type="number" class="form-control" placeholder="Precio del producto"
+                 formControlName="price">
+          <span *ngIf="checkField('price')" class="form-text text-danger">
+            El precio debe de ser igual o mayor a 0
+          </span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Existencias</label>
+        <div class="col-sm-9">
+          <input type="number" class="form-control" placeholder="Existencias del producto"
+                 formControlName="stock">
+          <span *ngIf="checkField('price')" class="form-text text-danger">
+            Las existencias deben ser igual o mayor a 0
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button type="submit" class="btn btn-primary float-end"
+                  [disabled]="false">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+
+    <span><b>Valid</b></span>
+    <pre>{{ basicsForm.valid }}</pre>
+
+    <span><b>Pristine</b></span>
+    <pre>{{ basicsForm.pristine }}</pre>
+
+    <span><b>Touched</b></span>
+    <pre>{{ basicsForm.touched }}</pre>
+
+    <span><b>Values</b></span>
+    <pre>{{ basicsForm.value | json }}</pre>
+
+  </div>
+</div>
+

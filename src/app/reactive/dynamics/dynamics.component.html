@@ -1,1 +1,62 @@
-<p>dynamics works!</p>
+<h2>Reactive: <small>Dinámicos</small></h2>
+<hr>
+
+<form autocomplete="off" [formGroup]="dynamicsForm">
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">Nombre</label>
+    <div class="col-sm-9">
+      <input class="form-control" type="text" placeholder="Nombre de la persona"
+             formControlName="name">
+      <span *ngIf="checkField('name')" class="form-text text-danger">
+        El nombre debe ser mínimo de 3 letras
+      </span>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">Agregar favorito</label>
+    <div class="col-sm-9">
+      <div class="input-group">
+        <input type="text" placeholder="Agregar favorito" class="form-control"
+               [formControl]="newFav" (keyup.enter)="addFav()">
+
+        <button type="button" class="btn btn-outline-primary" (click)="addFav()">
+          Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">Favoritos</label>
+    <div class="col-sm-9" formArrayName="favorites">
+      <div *ngFor="let fav of favorites.controls; let i = index"
+           class="input-group mb-1">
+        <input type="text" class="form-control" [formControlName]="i">
+        <button type="button" class="btn btn-outline-danger" (click)="deleteFav(i)">
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <button type="button" class="btn btn-primary float-end" (click)="onSubmit()">
+        Guardar
+      </button>
+    </div>
+  </div>
+</form>
+
+<span><b>Valid</b></span>
+<pre>{{ dynamicsForm.valid }}</pre>
+
+<span><b>Pristine</b></span>
+<pre>{{ dynamicsForm.pristine }}</pre>
+
+<span><b>Touched</b></span>
+<pre>{{ dynamicsForm.touched }}</pre>
+
+<span><b>Values</b></span>
+<pre>{{ dynamicsForm.value | json }}</pre>

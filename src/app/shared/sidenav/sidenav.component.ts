@@ -28,4 +28,9 @@ export class SidenavComponent {
     { text: 'Switches', route: 'reactive/switches' },
   ];
 
+  authMenu: MenuItem[] = [
+    { text: 'Sign Up', route: 'auth/signup' },
+    { text: 'Login', route: 'auth/login' },
+  ];
+
 }

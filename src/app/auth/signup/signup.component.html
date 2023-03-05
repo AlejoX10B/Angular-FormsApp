@@ -1,0 +1,95 @@
+<h2>Validaciones Reactivas - Sign Up</h2>
+<hr>
+
+<div class="row">
+  <div class="col">
+
+    <form autocomplete="off" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+      <div class="mb-3 row">
+        <label for="name" class="col-sm-3 col-form-label">Nombre</label>
+        <div class="col-sm-9">
+          <input type="text" name="name" id="name"
+                 class="form-control"
+                 placeholder="Nombre del usuario"
+                 formControlName="name">
+
+          <span *ngIf="checkField('name')" class="form-text text-danger">
+            Debe ser en formato de nombre y apellido
+          </span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="email" class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-9">
+          <input type="email" name="email" id="email"
+                 class="form-control"
+                 formControlName="email"
+                 placeholder="Email del usuario">
+
+          <span *ngIf="checkField('email')" class="form-text text-danger">
+            El correo es obligatorio
+          </span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="nickname" class="col-sm-3 col-form-label">Apodo</label>
+        <div class="col-sm-9">
+          <input type="text" name="nickname" id="nickname"
+                 class="form-control"
+                 formControlName="nickname"
+                 placeholder="Apodo del usuario">
+
+          <span *ngIf="checkField('nickname')" class="form-text text-danger">
+            El nickname no puede ser "Strider"
+          </span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="password" class="col-sm-3 col-form-label">Contraseña</label>
+        <div class="col-sm-9">
+          <input type="password" name="password" id="password"
+                 class="form-control"
+                 placeholder="Contraseña de la cuenta">
+
+          <!--<span class="form-text text-danger">
+            Debe ser en formato de nombre y apellido
+          </span>-->
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="confirm" class="col-sm-3 col-form-label">Contraseña</label>
+        <div class="col-sm-9">
+          <input type="password" name="confirm" id="confirm"
+                 class="form-control"
+                 placeholder="Confirmar la contraseña">
+
+          <!--<span class="form-text text-danger">
+            Debe ser en formato de nombre y apellido
+          </span>-->
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary float-end">
+        Crear usuario
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+<h5>Valido</h5>
+<pre>{{ signupForm.valid | json }}</pre>
+
+<h5>Valor del formulario</h5>
+<pre>{{ signupForm.value | json }}</pre>
+
+<h5>Errores:</h5>
+<pre>Name: {{ signupForm.controls['name'].errors | json }}</pre>
+<pre>Email: {{ signupForm.controls['email'].errors | json }}</pre>
+<pre>Nickname: {{ signupForm.controls['nickname'].errors | json }}</pre>
