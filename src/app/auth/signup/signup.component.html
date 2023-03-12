@@ -29,7 +29,7 @@
                  placeholder="Email del usuario">
 
           <span *ngIf="checkField('email')" class="form-text text-danger">
-            El correo es obligatorio
+            {{ emailError }}
           </span>
         </div>
       </div>
@@ -52,29 +52,30 @@
         <label for="password" class="col-sm-3 col-form-label">Contraseña</label>
         <div class="col-sm-9">
           <input type="password" name="password" id="password"
-                 class="form-control"
+                 class="form-control" formControlName="password"
                  placeholder="Contraseña de la cuenta">
 
-          <!--<span class="form-text text-danger">
-            Debe ser en formato de nombre y apellido
-          </span>-->
+          <span *ngIf="checkField('password')" class="form-text text-danger">
+            La contraseña debe ser de 6 caracteres
+          </span>
         </div>
       </div>
 
       <div class="mb-3 row">
-        <label for="confirm" class="col-sm-3 col-form-label">Contraseña</label>
+        <label for="confirm" class="col-sm-3 col-form-label">Confirmar contraseña</label>
         <div class="col-sm-9">
           <input type="password" name="confirm" id="confirm"
-                 class="form-control"
+                 class="form-control" formControlName="password2"
                  placeholder="Confirmar la contraseña">
 
-          <!--<span class="form-text text-danger">
-            Debe ser en formato de nombre y apellido
-          </span>-->
+          <span *ngIf="checkField('password2')" class="form-text text-danger">
+            Las contraseñas deben ser iguales
+          </span>
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary float-end">
+      <button type="submit" class="btn btn-primary float-end"
+              [disabled]="signupForm.pending">
         Crear usuario
       </button>
 
@@ -83,8 +84,15 @@
   </div>
 </div>
 
+
+<h5>Estatus</h5>
+<pre>{{ signupForm.status | json }}</pre>
+
 <h5>Valido</h5>
 <pre>{{ signupForm.valid | json }}</pre>
+
+<h5>Errores</h5>
+<pre>{{ signupForm.errors | json }}</pre>
 
 <h5>Valor del formulario</h5>
 <pre>{{ signupForm.value | json }}</pre>
@@ -93,3 +101,5 @@
 <pre>Name: {{ signupForm.controls['name'].errors | json }}</pre>
 <pre>Email: {{ signupForm.controls['email'].errors | json }}</pre>
 <pre>Nickname: {{ signupForm.controls['nickname'].errors | json }}</pre>
+<pre>Password: {{ signupForm.controls['password'].errors | json }}</pre>
+<pre>Confirm Password: {{ signupForm.controls['password2'].errors | json }}</pre>

@@ -1,43 +1,47 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-
-//TODO: Temp
-const namePattern: string = '([a-zA-Z+]) ([a-zA-Z+])';
-const emailPattern: string = '^[a-z0-9.%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+import * as v from '../../shared/validators/validators';
+import { EmailValidatorService } from '../../shared/validators/email-validator.service';
 
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styles: [
-  ]
+  styles: []
 })
 export class SignupComponent {
 
   signupForm: FormGroup = this.fb.group({
-    name: [null, [Validators.required, Validators.pattern(namePattern)]],
-    email: [null, [Validators.required, Validators.pattern(emailPattern)]],
-    nickname: [null, [Validators.required, this.checkNickname]],
+    name: [null, [Validators.required, Validators.pattern(v.namePattern)]],
+    email: [null, [Validators.required, Validators.pattern(v.emailPattern)], [ this.ev ]],
+    nickname: [null, [Validators.required, v.checkNickname]],
+    password: [null, [Validators.required, Validators.minLength(6)]],
+    password2: [null, [Validators.required]],
+  },{
+    validators: [v.confirmPassword('password', 'password2')]
   });
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private ev: EmailValidatorService
+  ) {
+
+    this.signupForm.reset({
+      name: 'Alejo Castaneda',
+      email: 'test1@mail.com',
+      nickname: 'CarajitoX',
+      password: '123456',
+      password2: '123456'
+    });
+  }
+
+  get emailError() {
+    return v.checkEmail(this.signupForm, 'email');
   }
 
   checkField(field: string) {
-    const form = this.signupForm;
-    return form.get(field)?.invalid && form.get(field)?.touched;
-  }
-
-  checkNickname(control: FormControl) {
-    const value: string = control.value?.trim().toLowerCase();
-    console.log(value);
-
-    if (value == 'strider') {
-      return { noStrider: true };
-    }
-
-    return null;
+    return v.checkField(this.signupForm, field);
   }
 
   onSubmit() {
